@@ -1,0 +1,249 @@
+[
+  {
+    "label": "订阅",
+    "type": "select",
+    "name": "ssub",
+    "options": {
+      "a": "关闭订阅",
+      "b": "翻遍全部，直到订阅完成",
+      "c": "只查看上新"
+    }
+  },
+  {
+    "name": "consoleshow",
+    "type": "checkbox",
+    "label": "日志窗体显示",
+    "help": " "
+  },
+  {
+    "name": "init_true",
+    "type": "checkbox",
+    "label": "重新加载题库",
+    "help": " "
+  },
+  {
+    "name": "article",
+    "type": "checkbox",
+    "label": "文章学习和广播收听",
+    "help": " "
+  },
+  {
+    "label": "视频学习",
+    "type": "select",
+    "name": "video",
+    "options": {
+      "a": "不进行学习",
+      "b": "百灵视频学习",
+      "c": "看电视视频学习",
+      "d": "新百灵视频学习"
+    }
+  },
+  {
+    "name": "meiri",
+    "type": "checkbox",
+    "label": "每日答题",
+    "help": " "
+  },
+  {
+    "name": "tiaozhan",
+    "type": "checkbox",
+    "label": "挑战答题",
+    "help": " "
+  },
+  {
+    "name": "checkbox_01",
+    "type": "checkbox",
+    "label": "专项答题(建议手动答题)",
+    "help": "不保证全部正确"
+  },
+  {
+    "name": "select",
+    "type": "select",
+    "label": "专项答题模式选择",
+    "options": {
+      "a": "不向下滑动，只答当天的题目,没有则返回",
+      "b": "向下滑动，直到找到可答题的题目"
+    },
+    "validation": "required",
+    "help": ""
+  },
+  {
+    "name": "checkbox_02",
+    "type": "checkbox",
+    "label": "每周答题(建议手动答题)",
+    "help": "不保证全部正确"
+  },
+  {
+    "name": "selectm",
+    "type": "select",
+    "label": "每周答题模式选择",
+    "options": {
+      "a": "不向下滑动，只答当天的题目,没有则返回",
+      "b": "向下滑动，直到找到可答题的题目"
+    },
+    "validation": "required",
+    "help": ""
+  },
+  {
+    "name": "首轮不答",
+    "type": "checkbox",
+    "label": "首轮不答",
+    "help": "勾选之前，需要配置以下信息"
+  },
+  {
+    "name": "delay_click",
+    "type": "range",
+    "label": "四人/双人点击答案延迟时间ms毫秒*30 最多延迟3000ms",
+    "help": "说明：0ms最快，越大越慢--(点击答案时间)"
+  },
+  {
+    "name": "checkbox_03",
+    "type": "checkbox",
+    "label": "四人答题",
+    "help": "勾选之前，需要配置以下信息"
+  },
+  {
+    "name": "shuangren",
+    "type": "checkbox",
+    "label": "双人答题",
+    "help": "勾选之前，需要配置以下信息"
+  },
+  {
+    "name": "delay_s",
+    "type": "number",
+    "label": "四人/双人点击的延迟时间ms毫秒",
+    "validation": "required",
+    "help": "说明：0ms最快，越大越慢--(文字识别速度影响最大)"
+  },
+  {
+    "name": "select_01",
+    "type": "select",
+    "label": "文字识别(OCR)类型选择",
+    "options": {
+      "c": "hamibot内置OCR->推荐",
+      "a": "华为OCR接口,需要填入以下关于华为的内容",
+      "d": "百度OCR接口,需要填入以下关于百度的内容",
+      "b": "第三方OCR插件,需要安装第三方插件"
+    },
+    "validation": "required",
+    "help": "帮助：选择适合自己手机的文字识别，建议都试一遍"
+  },
+  {
+    "name": "AK",
+    "type": "text",
+    "label": "百度OCR的API Key",
+    "help": " "
+  },
+  {
+    "name": "SK",
+    "type": "text",
+    "label": "百度OCR的Secret Key",
+    "help": " "
+  },
+  {
+    "name": "endpoint",
+    "type": "text",
+    "label": "华为OCR的Endpoint",
+    "help": " "
+  },
+  {
+    "name": "username",
+    "type": "text",
+    "label": "华为OCR刚刚新建的用户名-username",
+    "help": " "
+  },
+  {
+    "name": "password",
+    "type": "text",
+    "label": "华为OCR刚刚新建的用户名密码-password",
+    "help": " "
+  },
+  {
+    "name": "domainname",
+    "type": "text",
+    "label": "华为OCR的账号名-domainname",
+    "help": " "
+  },
+  {
+    "name": "projectname",
+    "type": "text",
+    "label": "华为OCR的项目名-projectname",
+    "help": " "
+  },
+  {
+    "name": "project_Id",
+    "type": "text",
+    "label": "华为OCR的projectId",
+    "help": " "
+  },
+  {
+    "name": "xxxxxxx",
+    "type": "link",
+    "label": "------------------------------------------------------------------------------------------",
+    "help": ""
+  },
+  {
+    "name": "alltime",
+    "type": "number",
+    "label": "看门狗-脚本运行的最长时间，超时或错误则自动重启脚本-时间s秒",
+    "validation": "required",
+    "placeholder": "2000",
+    "help": "部分手机可能出现不可控错误，一般重启脚本解决,故设置看门狗"
+  },
+  {
+    "name": "time1",
+    "type": "number",
+    "label": "文章学习时间自定义---每篇文章的秒数",
+    "validation": "required",
+    "help": " "
+  },
+  {
+    "name": "time2",
+    "type": "number",
+    "label": "视频学习时间自定义---每个视频的秒数",
+    "validation": "required",
+    "help": " "
+  },
+  {
+    "name": "xianzhi",
+    "type": "checkbox",
+    "label": "四人/双人不受积分限制开关",
+    "help": "说明：勾选后再一次运行脚本，四人/双人会再答题一次"
+  },
+  {
+    "name": "another",
+    "type": "number",
+    "label": "四人/双人额外的随机答题次数(乱答)",
+    "help": ""
+  },
+  {
+    "name": "stronger",
+    "type": "select",
+    "label": "每日、每周、专项答题增强模式",
+    "options": {
+      "a": "关闭",
+      "b": "使用华为OCR识别答案",
+      "c": "使用百度OCR识别答案"
+    },
+    "validation": "required",
+    "help": ""
+  },
+  {
+    "name": "sct_token",
+    "type": "text",
+    "label": "sct_token 专门异常消息推送",
+    "help": "注：sct_token+的Token，否则留空即可"
+  },
+  {
+    "name": "Token",
+    "type": "text",
+    "label": "push+ 消息推送",
+    "help": "注：有需要的自行填写push+的Token，否则留空即可"
+  },
+  {
+    "name": "TELEMETRY",
+    "type": "checkbox",
+    "label": "发送使用数据和错误报告",
+    "help": "帮助开发者改进脚本，这个报告会被认为是机密的，匿名的。"
+  }
+]
