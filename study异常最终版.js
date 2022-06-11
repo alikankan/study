@@ -913,23 +913,21 @@ function localChannel() {
     while (!desc("工作").exists()); //等待加载出主页
     desc("工作").click();
     console.log("点击本地频道");
-    if (text("新思想").exists()) {
+    if (text("四川").exists()) {
         text("要闻").findOne().parent().parent().child(3).click();
         delay(2);
         className("android.support.v7.widget.RecyclerView").findOne().child(0).click();
         delay(2);
         back();
     } else {
-        console.log("请手动点击本地频道！");
-        log("去本地频道");
 
-        if (textContains("四川")) {
-            click("四川");
-            sleep(1000);
-            click("四川综合广播");
-        }
+        className("android.widget.LinearLayout").clickable(true).depth(26).waitFor();
+        sleep(1000);
+        log("点击:" + "android.widget.LinearLayout");
+        className("android.widget.LinearLayout").clickable(true).depth(26).drawingOrder(1).findOne().click();
         sleep(1000);
         back();
+
     }
 }
 
@@ -1552,10 +1550,10 @@ function dailyQuestionLoop() {
             break;
         }
         log("等待题目出现");
-        vdlNum++;
-        if (vdlNum > 8) {
-            break;
-        }
+        // vdlNum++;
+        // if (vdlNum > 8) {
+        //     break;
+        // }
         delay(1);
     }
 
@@ -2395,6 +2393,7 @@ function click_by_answer(ans, question) {
             pos = i;
         }
     }
+    sleep(点击延迟时间);
     return o1[pos];
 }
 function similarity_answer(op, ans) {
@@ -3038,8 +3037,8 @@ function back_table() {
 function rand_mode() {
     start_app(); //启动app
     /* 
-      处理访问异常，滑动验证
-      */
+        处理访问异常，滑动验证
+        */
     var id_handling_access_exceptions;
     // 在子线程执行的定时器，如果不用子线程，则无法获取弹出页面的控件
     var thread_handling_access_exceptions = threads.start(function () {
@@ -3243,7 +3242,23 @@ function 每日() {
         handling_access_exceptions();
     }
 }
+function 等待主页(waitNum) {
+    console.warn('等待加载主页');
+    if (text("排行榜").exists()) {
+        delay(0.5);
+        back();
+        delay(0.5);
+        back();
+        delay(0.5);
+    } else {
+        waitNum++;
+        back();
+        if (waitNum > 8) {
+            back_table();
+        }
+    }
 
+}
 function 视频学习() {
     var x = 1;
     if (text("排行榜").exists()) {
@@ -3256,13 +3271,7 @@ function 视频学习() {
     while (!desc("工作").exists()) {
         //等待加载出主页
         console.info("等待加载主页");
-        if (text("排行榜").exists()) {
-            delay(0.5);
-            back();
-            delay(0.5);
-            back();
-            delay(0.5);
-        }
+        等待主页(1);
         delay(2);
     }
     while (vCount != 0 && video != "a") {
@@ -3297,13 +3306,7 @@ function 本地() {
         while (!desc("工作").exists()) {
             //等待加载出主页
             console.info("等待加载主页");
-            if (text("排行榜").exists()) {
-                delay(0.5);
-                back();
-                delay(0.5);
-                back();
-                delay(0.5);
-            }
+            等待主页(1);
             delay(2);
         }
         localChannel(); //本地频道
@@ -3322,13 +3325,7 @@ function 订() {
         while (!desc("工作").exists()) {
             //等待加载出主页
             console.info("等待加载主页");
-            if (text("排行榜").exists()) {
-                delay(0.5);
-                back();
-                delay(0.5);
-                back();
-                delay(0.5);
-            }
+            等待主页(1);
             delay(2);
         }
         sub(); //订阅
@@ -3346,13 +3343,7 @@ function 文章和广播() {
     while (!desc("工作").exists()) {
         //等待加载出主页
         console.info("等待加载主页");
-        if (text("排行榜").exists()) {
-            delay(0.5);
-            back();
-            delay(0.5);
-            back();
-            delay(0.5);
-        }
+        等待主页(1);
         delay(2);
     }
     if (rTime != 0 && articles == true) {
@@ -3392,3 +3383,4 @@ function 文章和广播() {
 }
 
 //toastLog(logs);
+
