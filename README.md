@@ -5,6 +5,9 @@ https://github.com/Twelve-blog/Study_hamibot
 hamibot 
 https://hamibot.com/marketplace/yHlGK?invite=GWPMY3faSW5R3cHo9ZguEs1Y
 
+题库更新来源
+https://github.com/Pandaver/XXQG_TiKu_Transform
+
 免责声明
 此仓库为交流的开源非营利项目，本脚本为免费使用，本脚本只供个人学习使用，不得盈利传播，不得用于违法用途，否则造成的一切后果自负！
 
