@@ -4,7 +4,7 @@ importClass(java.net.HttpURLConnection);
 importClass(java.net.URL);
 importClass(java.io.File);
 importClass(java.io.FileOutputStream);
-var url = "https://git.metauniverse-cn.com/https://raw.githubusercontent.com/Twelve-blog/Study_hamibot/main/QuestionBank.db";
+var url = "https://gh-proxy.com//https://raw.githubusercontent.com/Twelve-blog/Study_hamibot/main/QuestionBank.db";
 var path = "/sdcard/QuestionBank.db";
 var path_replace = "/sdcard/replace.js";
 var path_question = "/sdcard/question";
@@ -53,7 +53,7 @@ var { 点击延迟时间 } = hamibot.env.delay_click * 50;
 if (!点击延迟时间 || 点击延迟时间 < 0) 点击延迟时间 = 0;
 var downloadDialog = null;
 // var init_url = "https://git.yumenaka.net/https://raw.githubusercontent.com/Twelve-blog/picture/master/question";
-var init_url = "https://git.metauniverse-cn.com/https://raw.githubusercontent.com/alikankan/study/main/question";
+var init_url = "https://gh-proxy.com/https://raw.githubusercontent.com/alikankan/study/main/question";
 var file_tmp = false;
 //var { file_tmp } = hamibot.env;
 var tikus = "";
@@ -144,7 +144,7 @@ function get_ocr() {
 
 function get_hamibot_ocr() {
     console.info("你选择了hamibot内置文字识别（OCR）");
-    if (app.versionName < "1.3.1") {
+    if (app.versionName < "1.3.0-beta.1") {
         console.error("请去hamibot官网下载版本1.3.0以上的hamibot！！！，脚本结束");
         exit();
     }
@@ -1265,7 +1265,7 @@ function clickByAnswer(answer) {
             //单选答案为非ABCD
             var listDescStr = item.child(0).child(2).text();
             if (answer.indexOf(listIndexStr) >= 0 || answer == listDescStr) {
-                sleep(点击延迟时间);
+                //  sleep(点击延迟时间);
                 item.child(0).click();
                 click_true = true;
             }
@@ -2182,7 +2182,7 @@ function click_by_answer(ans, question) {
             pos = i;
         }
     }
-    sleep(点击延迟时间);
+    //  sleep(点击延迟时间);
     return o1[pos];
 }
 function similarity_answer(op, ans) {
@@ -2361,7 +2361,7 @@ function init() {
         threads.start(function () {
             if (!files.exists(path_replace)) {
                 try {
-                    var x = http.get("https://git.metauniverse-cn.com/https://raw.githubusercontent.com/Twelve-blog/picture/master/replace.js").body.string();
+                    var x = http.get("https://gh-proxy.com//https://raw.githubusercontent.com/Twelve-blog/picture/master/replace.js").body.string();
                     files.write("/sdcard/replace.js", x);
 
                     r = require("/sdcard/replace.js");
