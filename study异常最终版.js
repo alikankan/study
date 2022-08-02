@@ -707,17 +707,21 @@ function listenToRadio() {
  */
 function swipeThread(stime, ptime) {
     try {
-        // 滑动按钮位置
-        className("android.view.View").depth(10).clickable(true).waitFor();
-        var pos = className("android.view.View").depth(10).clickable(true).findOnce(1).bounds();
-        // 滑动框右边界
-        className("android.view.View").depth(9).clickable(false).waitFor();
-        var right_border = className("android.view.View").depth(9).clickable(false).findOnce(0).bounds().right;
-        // 位置取随机值
-        var randomX = random(pos.left, pos.right);
-        var randomY = random(pos.top, pos.bottom);
-        swipe(randomX, randomY, randomX + right_border, randomY, random(350, stime));
-        press(randomX + right_border, randomY, ptime);
+        textContains("访问异常").waitFor();
+
+        var bound = idContains("nc_1_n1t").findOne().bounds();
+        var slider_bound = text("向右滑动验证").findOne().bounds();
+        var x_start = bound.centerX();
+        var dx = x_start - slider_bound.left;
+        var x_end = slider_bound.right - dx;
+        var x_mid = (x_end - x_start) * random(5, 8) / 10 + x_start;
+        var back_x = (x_end - x_start) * random(2, 3) / 10;
+        var y_start = random(bound.top, bound.bottom);
+        var y_end = random(bound.top, bound.bottom);
+        x_start = random(x_start - 7, x_start);
+        x_end = random(x_end, x_end + 10);
+        gesture(random(stime, ptime), [x_start, y_start], [x_mid, y_end], [x_mid - back_x, y_start], [x_end, y_end]);
+        sleep(500);
     } catch (error) {
         log(error + "使用另一版本滑动验证");
         logs.push(error + "使用另一版本滑动验证");
@@ -726,10 +730,12 @@ function swipeThread(stime, ptime) {
         console.error("当前需要验证，正在过验证");
         gestures([0, random(400, 1000), [b.centerX(), b.centerY()], [device.width, b.centerY()]]);
         delay(2);
-        if (text("刷新").exists()) {
-            text("刷新").findOne(1000).parent().click();
-        }
+
     }
+    if (text("刷新").exists()) {
+        text("刷新").findOne(1000).parent().click();
+    }
+
 }
 function handling_access_exceptions() {
     toast("");
@@ -1877,8 +1883,8 @@ function challengeQuestion() {
                 if (复活 && conNum < qCount) {
                     复活 = false;
                     // textContains("分享就能复活").findOne().click();
-                    if (text("分享就能复活").exists()) {
-                        click("分享就能复活");
+                    if (text("立即复活").exists()) {
+                        click("立即复活");
                     }
                     delay(0.5);
                     back();
@@ -3164,5 +3170,3 @@ function 文章和广播() {
 }
 
 //toastLog(logs);
-
-
