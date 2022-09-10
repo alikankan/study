@@ -4,7 +4,7 @@ importClass(java.net.HttpURLConnection);
 importClass(java.net.URL);
 importClass(java.io.File);
 importClass(java.io.FileOutputStream);
-var url = "https://gh-proxy.com//https://raw.githubusercontent.com/Twelve-blog/Study_hamibot/main/QuestionBank.db";
+var url = "https://gh.fakev.cn/Pandaver/XXQG_TiKu_Transform/raw/main/QuestionBank.db";
 var path = "/sdcard/QuestionBank.db";
 var path_replace = "/sdcard/replace.js";
 var path_question = "/sdcard/question";
@@ -59,6 +59,8 @@ var file_tmp = false;
 var tikus = "";
 const { TELEMETRY } = hamibot.env;
 var logs = [];
+var myScores = {};
+
 /**
  * 获取用户token
  */
@@ -840,66 +842,64 @@ function localChannel() {
  * @param: null
  * @return: null
  */
-function getScores(i) {
+function getScores(l) {
     while (!desc("工作").exists()); //等待加载出主页
     console.log("正在获取积分...");
     delay(2);
-    while (!text("积分明细").exists()) {
-        if (id("comm_head_xuexi_score").exists()) {
-            id("comm_head_xuexi_score").findOnce().click();
-        } else if (text("积分").exists()) {
-            text("积分").findOnce().parent().child(1).click();
-        }
-        delay(3);
+    if (id("comm_head_xuexi_score").exists()) {
+        id("comm_head_xuexi_score").findOnce().click();
+    } else if (text("积分").exists()) {
+        text("积分").findOnce().parent().child(1).click();
     }
-    while (!text("登录").exists()) {
-        delay(0.5);
-    }
-    let err = false;
+    var texts = "";
+
+    delay(5);
     for (var i = 4; i < 17; i++) {
+
         // 由于模拟器有model无法读取因此用try catch
         try {
             var model = className("android.view.View").depth(24).findOnce(i);
             if (i == 4) {
-                score['我要选读文章'] = parseInt(model.child(3).child(0).text());
-                texts += '我要选读文章' + score['我要选读文章']
+                myScores['我要选读文章'] = parseInt(model.child(3).child(0).text());
+                texts += '我要选读文章' + myScores['我要选读文章']
             } else if (i == 5) {
-                score['视听学习'] = parseInt(model.child(3).child(0).text());
-                texts += '视听学习' + score['视听学习']
+                myScores['视听学习'] = parseInt(model.child(3).child(0).text());
+                texts += '视听学习' + myScores['视听学习']
 
             } else if (i == 16) {
-                score['每周答题'] = parseInt(model.child(3).child(0).text());
-                texts += '每周答题' + score['每周答题']
+                myScores['每周答题'] = parseInt(model.child(3).child(0).text());
+                texts += '每周答题' + myScores['每周答题']
             } else if (i == 7) {
-                score['每日答题'] = parseInt(model.child(3).child(0).text());
-                texts += '每日答题' + score['每日答题']
+                myScores['每日答题'] = parseInt(model.child(3).child(0).text());
+                texts += '每日答题' + myScores['每日答题']
             } else if (i == 8) {
-                score['专项答题'] = parseInt(model.child(3).child(0).text());
-                texts += '专项答题' + score['专项答题']
+                myScores['专项答题'] = parseInt(model.child(3).child(0).text());
+                texts += '专项答题' + myScores['专项答题']
             } else if (i == 9) {
-                score['挑战答题'] = parseInt(model.child(3).child(0).text());
-                texts += '挑战答题' + score['挑战答题']
+                myScores['挑战答题'] = parseInt(model.child(3).child(0).text());
+                texts += '挑战答题' + myScores['挑战答题']
             } else if (i == 10) {
-                score['四人赛'] = parseInt(model.child(3).child(0).text());
-                texts += '四人赛' + score['四人赛']
+                myScores['四人赛'] = parseInt(model.child(3).child(0).text());
+                texts += '四人赛' + myScores['四人赛']
             } else if (i == 11) {
-                score['双人对战'] = parseInt(model.child(3).child(0).text());
-                texts += '双人对战' + score['双人对战']
+                myScores['双人对战'] = parseInt(model.child(3).child(0).text());
+                texts += '双人对战' + myScores['双人对战']
             }
             else if (i == 13) {
-                score['发表观点'] = parseInt(model.child(3).child(0).text());
+                myScores['发表观点'] = parseInt(model.child(3).child(0).text());
             } else if (i == 14) {
-                score['本地频道'] = parseInt(model.child(3).child(0).text());
-                texts += '本地频道' + score['本地频道']
+                myScores['本地频道'] = parseInt(model.child(3).child(0).text());
+                texts += '本地频道' + myScores['本地频道']
             } else {
                 log("i=" + i + "分数" + parseInt(model.child(3).child(0).text()))
             }
-            //  finish_list.push(model.child(4).text() == "已完成");
+
         } catch (error) {
 
         }
+        console.log("积分循环 ..." + texts);
     }
-    if (i == 3) {
+    if (l == 3) {
         var score = textContains("今日已累积").findOne().text();
         score += "%0A四人赛：" + myScores["四人赛"] + "分";
         score += "%0A双人赛：" + myScores["双人对战"] + "分";
@@ -911,7 +911,7 @@ function getScores(i) {
     //console.log(myScores);
 
     aCount = Math.ceil((12 - myScores["我要选读文章"]) / 2); //文章个数
-    if (i == 1) {
+    if (l == 1) {
         console.info("检查阅读文章是否满分！");
         aCount = 12 - myScores["我要选读文章"];
         if (aCount != 0) {
@@ -924,7 +924,7 @@ function getScores(i) {
         delay(1);
         return;
     }
-    if (i == 2) {
+    if (l == 2) {
         console.info("检查视频是否满分！");
         vCount = 6 - myScores["视听学习"];
         if (vCount != 0) {
