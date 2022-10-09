@@ -228,6 +228,17 @@ var captcha = false;
 function delay(a) {
     sleep(a * 1000 + Math.random() * 1000);
 }
+function my_click_non_clickable(target) {
+    if (typeof (target) == "string") {
+        text(target).waitFor();
+        var tmp = text(target).findOne().bounds();
+    } else {
+        var tmp = target.bounds();
+    }
+    var randomX = random(tmp.left, tmp.right);
+    var randomY = random(tmp.top, tmp.bottom);
+    click(randomX, randomY);
+}
 /**
  * @description: 得到各项次数
  */
@@ -339,7 +350,7 @@ function get_all_num() {
     console.log('视频学习:' + video_num + '次');
     console.log('每日答题:' + daily_num + '次');
     // console.log('每周答题:'+week_num+'次');
-    // console.log('专项答题:'+special_num+'次');
+    console.log('专项答题:' + special_num + '次');
     console.log('挑战答题:' + challenge_num + '次');
     console.log('四人赛  :' + four_num + '次');
     console.log('双人对战:' + double_num + '次');
@@ -480,17 +491,22 @@ function local_() {
     back_table();
     desc('工作').click();
     delay(2);
-    text("要闻").findOne().parent().parent().child(3).click();
+    my_click_non_clickable('四川')
     delay(2);
-    try {
-        className("android.support.v7.widget.RecyclerView").findOne(500).child(0).click();
+
+    if (text("四川").exists()) {
+
+        className("android.widget.LinearLayout").clickable(true).depth(26).waitFor();
+
+        className("android.widget.LinearLayout").clickable(true).depth(26).drawingOrder(1).findOne().click();
+        toastLog('点击四川学习平台')
+        back();
+    } else {
+        my_click_non_clickable('四川')
+        my_click_non_clickable('四川学习平台')
+        back();
     }
-    catch (e) {
-        try {
-            className("androidx.recyclerview.widget.RecyclerView").findOne(500).child(0).click();
-        } catch (e) { }
-    }
-    delay(2);
+
     back_table();
     console.info('本地频道完成');
     delay(2);
@@ -752,9 +768,17 @@ function daily_Answer() {
 function challenge_loop(x) {
     yinzi = false;
     if (x > 5) {
-        console.info('答题次数已满，随机点击');
-        var tmp = className("ListView").findOne().childCount();
-        className("ListView").findOne().child(random(0, tmp - 1)).child(0).child(0).click();
+
+        try {
+            console.info('答题次数已满，随机点击');
+            var tmp = className("ListView").findOne().childCount();
+            className("ListView").findOne().child(random(0, tmp - 1)).child(0).child(0).click();
+        } catch (error) {
+            console.info('随机点击错误')
+            back();
+
+        }
+
     }
     else {
         reg = /下列..正确的是.*/g;
@@ -789,7 +813,12 @@ function challenge_loop(x) {
                 click_option = i;
             }
         }
-        option.child(click_option).child(0).child(0).click();
+        try {
+            option.child(click_option).child(0).child(0).click();
+        } catch (error) {
+            console.log('挑战答题点击答案异常');
+        }
+
     }
     delay(1);
 
@@ -1048,7 +1077,7 @@ function challenge() {
         delay(0.5);
         if (text('wrong@3x.9ccb997c').exists() || text('2kNFBadJuqbAAAAAElFTkSuQmCC').exists() || text("v5IOXn6lQWYTJeqX2eHuNcrPesmSud2JdogYyGnRNxujMT8RS7y43zxY4coWepspQkvw" + "RDTJtCTsZ5JW+8sGvTRDzFnDeO+BcOEpP0Rte6f+HwcGxeN2dglWfgH8P0C7HkCMJOAAAAAElFTkSuQmCC").exists()) {
             delay(1);
-            if (text("立即复活").exists()) {
+            if (xxxxx < challenge_loop_num && text("立即复活").exists()) {
                 click("立即复活");
                 delay(1);
 
@@ -1057,7 +1086,9 @@ function challenge() {
                 delay(2);
             }
             if (xxxxx > challenge_loop_num) {
-                text('再来一局').waitFor();
+                if (text('再来一局').exists()) {
+                    text('再来一局').waitFor();
+                }
                 delay(1);
                 back();
                 break;
@@ -1959,13 +1990,33 @@ function start_close_radio(flag) {
         delay(2);
         click('听广播');
         delay(2);
-        log("等待:" + "lay_state_icon");
-        id("lay_state_icon").waitFor();
-        var lay_state_icon_pos = id("lay_state_icon").findOne().bounds();
-        click(lay_state_icon_pos.centerX(), lay_state_icon_pos.centerY());
-        delay(2);
-        var home_bottom = id("home_bottom_tab_icon_large").findOne().bounds();
-        click(home_bottom.centerX(), home_bottom.centerY());
+        if (id("lay_state_icon").exists()) {
+            log("等待:" + "lay_state_icon");
+            id("lay_state_icon").waitFor();
+            var lay_state_icon_pos = id("lay_state_icon").findOne().bounds();
+            click(lay_state_icon_pos.centerX(), lay_state_icon_pos.centerY());
+            delay(2);
+            var home_bottom = id("home_bottom_tab_icon_large").findOne().bounds();
+            click(home_bottom.centerX(), home_bottom.centerY());
+        } else {
+            console.info("广播点击失败换个方式");
+            while (!(textContains("正在收听").exists() || textContains("最近收听").exists() || textContains("推荐收听").exists())) {
+                log("等待加载");
+                delay(1);
+            }
+            if (click("最近收听") == 0) {
+                if (click("推荐收听") == 0) {
+                    click("正在收听");
+                }
+            }
+            delay(2);
+            if (id("btn_back").findOne().click() == 0) {
+                delay(2);
+                back(); //返回电台界面
+            }
+            back();
+        }
+
     }
     else {
         console.info("正在关闭广播");
@@ -2231,6 +2282,7 @@ function main() {
                 week_Answer();
                 break;
             case 10:
+                daily_Answer();
                 special_Answer();
                 break;
         }
@@ -2351,4 +2403,3 @@ threads.start(function () {
 })
 
 watchdog();
-
