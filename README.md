@@ -2,7 +2,7 @@
 修改来源于：LazyStudy
 https://github.com/Twelve-blog/Study_hamibot
 品尝
-https://hamibot.com/marketplace/cL50q?invite=RMAOAg4WaSaRndHg0bdrdnpr
+https://hamibot.com/marketplace/yHlGK?invite=GWPMY3faSW5R3cHo9ZguEs1Y
 题库更新来源
 https://github.com/Pandaver/XXQG_TiKu_Transform
 
